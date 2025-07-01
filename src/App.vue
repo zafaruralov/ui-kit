@@ -30,9 +30,35 @@
       <BaseButton :grouped="true">test3</BaseButton>
     </div>
   </div>
+  <!-- Regular Inputs Column -->
+  <DynamicInput
+    v-model="inputValue"
+    label="Ваше Ф.И.О."
+    placeholder="hi"
+    status="success"
+    required
+    :is-static-label="true"
+    message="Пользователь уже существует!"
+  >
+  </DynamicInput>
+  <DynamicInput
+    v-model="inputValue"
+    label="Ваше Ф.И.О."
+    :is-static-label="false"
+    :has-icon-right="true"
+    :has-icon-left="false"
+    message="Пользователь уже существует!"
+  >
+    <!-- <template #icon-right> -->
+    <img src="/public/favicon.ico" alt="icon" />
+    <!-- </template> -->
+  </DynamicInput>
+  <DynamicInput v-model="inputValue" label="Ваше Ф.И.О." placeholder="hi" required readonly :is-static-label="true">
+  </DynamicInput>
 </template>
 <script setup>
 import BaseButton from "./components/BaseButton.vue";
+import DynamicInput from "./components/DynamicInput.vue";
 </script>
 <style>
 .need-space {

@@ -59,15 +59,6 @@ const isHovered = ref(false);
 </template>
 
 <style>
-:root {
-  --color-primary: #116acc;
-  --color-secondary: #182233;
-  --color-info: #6496ff;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-error: #dc3545;
-}
-
 .btn-base {
   font-weight: 500;
   display: inline-flex;

@@ -1,7 +1,6 @@
 <template>
   <div class="tooltip-badge" :class="[`tooltip-${position}`, `mode-${mode}`, { visible: mode !== 'on-hover' || show }]">
     <span class="tooltip-content" :class="mode === 'on-hover' && 'hovered'">{{ text }}</span>
-    <div v-if="mode === 'on-hover'" class="tooltip-arrow" />
   </div>
 </template>
 

@@ -20,10 +20,16 @@
     >
 
     <div class="input-container">
+      <!-- preaddon -->
+      <span class="preaddon" v-if="preaddon.length > 0">{{ preaddon }}</span>
+
       <slot name="icon-left" />
+
+      <slot name="prefix" />
 
       <div class="input-inner">
         <input
+          class="input-inners"
           :type="type"
           :placeholder="isStaticLabel ? placeholder : focused || filled ? '' : placeholder"
           :disabled="disabled"
@@ -41,7 +47,11 @@
         </label>
       </div>
 
+      <slot name="suffix" />
+
       <slot name="icon-right" />
+
+      <slot name="append" />
     </div>
 
     <p v-if="message" class="message" :class="status">{{ message }}</p>
@@ -54,6 +64,10 @@ import { computed, ref, watch } from "vue";
 const props = defineProps({
   modelValue: String,
   label: String,
+  preaddon: {
+    type: String,
+    default: ""
+  },
   placeholder: String,
   required: Boolean,
   hasIconLeft: Boolean,
@@ -95,14 +109,7 @@ function onInput(e) {
 }
 </script>
 
-<style>
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  position: relative;
-}
-
+<style scoped>
 .input-container {
   display: flex;
   align-items: center;
@@ -119,7 +126,7 @@ function onInput(e) {
   position: relative;
 }
 
-input {
+.input-inners {
   width: 100%;
   border: none;
   outline: none;
@@ -155,7 +162,7 @@ input {
 }
 
 .required {
-  color: red;
+  color: var(--color-error);
   margin-left: 2px;
 }
 
@@ -170,6 +177,7 @@ input {
   font-size: 12px;
   margin-top: 2px;
 }
+
 .message.error {
   color: var(--color-error);
 }

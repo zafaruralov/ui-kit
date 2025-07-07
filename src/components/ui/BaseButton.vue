@@ -24,11 +24,8 @@ const props = defineProps({
   grouped: Boolean
 });
 
-const variant = computed(() => props.variant || "solid");
 const size = computed(() => props.size || "medium");
 const disabled = computed(() => props.disabled || false);
-const icon = computed(() => props.icon || false);
-const badge = computed(() => props.badge || false);
 
 const classes = computed(() => {
   return [
@@ -46,11 +43,14 @@ const classes = computed(() => {
 const isHovered = ref(false);
 </script>
 <template>
+  <!-- badgeText && (badgePosition !== 'on-hover' || isHovered) -->
   <button :class="classes" :disabled="disabled" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <slot />
     <TooltipBadge
-      v-show="badgeText && isHovered"
+      v-show="true"
       :text="badgeText"
+      :size="size"
+      :color="props.color"
       :position="badgeDirection || 'top'"
       :mode="badgePosition"
       :show="isHovered"

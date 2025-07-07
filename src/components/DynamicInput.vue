@@ -4,8 +4,6 @@
     :class="[
       statusClass,
       {
-        'has-left-icon': hasIconLeft,
-        'has-right-icon': hasIconRight,
         focused,
         filled,
         hovered,
@@ -15,23 +13,35 @@
       }
     ]"
   >
-    <label v-if="label && isStaticLabel" class="label static"
-      >{{ label }}<span v-if="required" class="required">*</span></label
-    >
+    <label v-if="label && isStaticLabel" class="label static">
+      {{ label }}<span v-if="required" class="required">*</span>
+    </label>
 
-    <div class="input-container">
-      <!-- preaddon -->
-      <span class="preaddon" v-if="preaddon.length > 0">{{ preaddon }}</span>
+    <div class="input-group">
+      <!-- Preaddon -->
+      <span
+        v-if="preaddon"
+        class="input-addon left"
+      >
+        {{ preaddon }}
+      </span>
 
+      <!-- Left Icon -->
       <slot name="icon-left" />
 
+      <!-- Prefix -->
       <slot name="prefix" />
 
-      <div class="input-inner">
+      <!-- Input container -->
+      <div class="input-container">
         <input
-          class="input-inners"
+          class="input-element"
+          :class="{
+            'rounded-left-none': preaddon,
+            'rounded-right-none': $slots.append || $slots['icon-right'] || $slots.suffix
+          }"
           :type="type"
-          :placeholder="isStaticLabel ? placeholder : focused || filled ? '' : placeholder"
+          :placeholder="!isStaticLabel && !(focused || filled) ? placeholder : ''"
           :disabled="disabled"
           :readonly="readonly"
           v-model="innerValue"
@@ -42,39 +52,47 @@
           @mouseleave="hovered = false"
         />
 
-        <label v-if="label && !isStaticLabel" class="label floating" :class="{ active: focused || filled }">
+        <label
+          v-if="label && !isStaticLabel"
+          class="label floating"
+          :class="{ active: focused || filled }"
+        >
           {{ label }}<span v-if="required" class="required">*</span>
         </label>
       </div>
 
+      <!-- Suffix -->
       <slot name="suffix" />
 
+      <!-- Right Icon -->
       <slot name="icon-right" />
 
+      <!-- Append -->
       <slot name="append" />
     </div>
 
+    <!-- Message -->
     <p v-if="message" class="message" :class="status">{{ message }}</p>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { ref, computed, watch } from 'vue';
 
 const props = defineProps({
   modelValue: String,
   label: String,
+  placeholder: String,
   preaddon: {
     type: String,
-    default: ""
+    default: ''
   },
-  placeholder: String,
   required: Boolean,
   hasIconLeft: Boolean,
   hasIconRight: Boolean,
   type: {
     type: String,
-    default: "text"
+    default: 'text'
   },
   status: String,
   message: String,
@@ -83,18 +101,18 @@ const props = defineProps({
   isStaticLabel: Boolean
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
+
 const innerValue = ref(props.modelValue);
 const focused = ref(false);
 const hovered = ref(false);
 
 const filled = computed(() => !!innerValue.value);
-const statusClass = computed(() => (props.status ? `status-${props.status}` : ""));
+const statusClass = computed(() => (props.status ? `status-${props.status}` : ''));
 
-watch(
-  () => props.modelValue,
-  (val) => (innerValue.value = val)
-);
+watch(() => props.modelValue, (val) => {
+  innerValue.value = val;
+});
 
 function onFocus() {
   focused.value = true;
@@ -105,72 +123,96 @@ function onBlur() {
 }
 
 function onInput(e) {
-  emit("update:modelValue", e.target.value);
+  emit('update:modelValue', e.target.value);
 }
 </script>
 
 <style scoped>
-.input-container {
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group {
+  display: flex;
+  width: 100%;
+  font-size: 14px;
+}
+
+.input-addon {
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 0 12px;
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px 14px;
-  position: relative;
-  background: white;
-  transition: border 0.2s;
+  border: 1px solid #cbd5e1;
+  height: 40px;
+  white-space: nowrap;
 }
 
-.input-inner {
+.input-addon.left {
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+}
+
+.input-element {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  height: 40px;
+  padding: 0 12px;
+  outline: none;
+  color: #0f172a;
+  font-size: 14px;
+  border-radius: 8px;
+  background: white;
+}
+
+.rounded-left-none {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rounded-right-none {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-container {
   flex: 1;
   position: relative;
-}
-
-.input-inners {
+  display: flex;
+  align-items: center;
   width: 100%;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  padding: 0;
-  background: transparent;
-  color: #333;
 }
 
 .label.static {
   font-size: 12px;
   font-weight: 500;
   color: #555;
-  margin-bottom: 2px;
 }
 
 .label.floating {
   position: absolute;
+  left: 14px;
   top: 50%;
-  left: 0;
   transform: translateY(-50%);
-  transition: all 0.2s ease;
+  color: #64748b;
   font-size: 14px;
-  color: #333333;
   pointer-events: none;
-}
-
-.label.floating.active {
-  top: -10px;
-  font-size: 12px;
+  transition: 0.2s ease;
   background: white;
   padding: 0 4px;
 }
 
-.required {
-  color: var(--color-error);
-  margin-left: 2px;
+.label.floating.active {
+  top: -8px;
+  font-size: 12px;
 }
 
-.status-error .input-container {
-  border-color: var(--color-error);
-}
-.status-success .input-container {
-  border-color: var(--color-success);
+.required {
+  color: var(--color-error, red);
+  margin-left: 4px;
 }
 
 .message {
@@ -179,18 +221,10 @@ function onInput(e) {
 }
 
 .message.error {
-  color: var(--color-error);
+  color: var(--color-error, red);
 }
+
 .message.success {
-  color: var(--color-success);
-}
-
-input:disabled {
-  background: #f5f5f5;
-  cursor: not-allowed;
-}
-
-input:read-only {
-  background: #f9f9f9;
+  color: var(--color-success, green);
 }
 </style>

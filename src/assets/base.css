@@ -5,6 +5,18 @@
   align-items: center;
 }
 
+*,
+ul,
+p {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  outline: none;
+  font-family: "Inter", sans-serif;
+}
+
 :root {
   --color-primary: #116acc;
   --color-secondary: #182233;

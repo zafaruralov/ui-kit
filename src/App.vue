@@ -12,7 +12,11 @@
       message="Пользователь уже существует!"
     >
     </InputText>
-    <InputText placeholder="hi" label="Ваше Ф.И.О." :is-static-label="true" preaddon="https://" />
+    <InputText placeholder="hi" label="Ваше Ф.И.О." :is-static-label="true" preaddon="https://">
+      <template #append>
+        <button class="input-button right">hi</button>
+      </template>
+    </InputText>
     <InputText
       v-model="inputValue"
       label="Ваше Ф.И.О."
@@ -21,14 +25,21 @@
       :has-icon-left="false"
       message="Пользователь уже существует!"
     >
-      <img src="/public/favicon.ico" alt="icon" />
     </InputText>
-    <InputText v-model="inputValue" label="Ваше Ф.И.О." placeholder="hi" required readonly :is-static-label="true">
+    <InputText
+      v-model="inputValue"
+      status="error"
+      label="Ваше Ф.И.О."
+      placeholder="hi"
+      required
+      readonly
+      :is-static-label="true"
+    >
     </InputText>
   </div>
 </template>
 <script setup>
-import InputText from "./components/DynamicInput.vue";
+import InputText from "./components/ui/DynamicInput.vue";
 </script>
 <style>
 .need-space {

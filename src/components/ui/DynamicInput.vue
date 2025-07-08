@@ -21,7 +21,7 @@
       <span v-if="preaddon" class="input-addon left">
         {{ preaddon }}
       </span>
-
+      <slot name="prepend" />
       <slot name="icon-left" />
 
       <slot name="prefix" />
@@ -29,10 +29,13 @@
       <div class="input-container">
         <input
           class="input-element"
-          :class="{
-            'rounded-left-none': preaddon,
-            'rounded-right-none': postaddon || $slots.append || $slots['icon-right'] || $slots.suffix
-          }"
+          :class="[
+            status,
+            {
+              'rounded-left-none': preaddon,
+              'rounded-right-none': postaddon || $slots.append || $slots['icon-right'] || $slots.suffix
+            }
+          ]"
           :type="type"
           :placeholder="!isStaticLabel && !(focused || filled) ? placeholder : ''"
           :disabled="disabled"
@@ -55,13 +58,11 @@
       <slot name="icon-right" />
 
       <slot name="append" />
-
       <span v-if="postaddon" class="input-addon right">
         {{ postaddon }}
       </span>
     </div>
 
-    <!-- Message -->
     <p v-if="message" class="message" :class="status">{{ message }}</p>
   </div>
 </template>
@@ -124,7 +125,7 @@ function onInput(e) {
 }
 </script>
 
-<style scoped>
+<style>
 .input-wrapper {
   display: flex;
   flex-direction: column;
@@ -137,14 +138,37 @@ function onInput(e) {
   font-size: 14px;
 }
 
+.input-button {
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  height: 45px;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.input-button.left {
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+}
+
+.input-button.right {
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+}
+
 .input-addon {
-  background: #f1f5f9;
-  color: #64748b;
+  background: #fdfdfd;
+  color: #9ca3af;
   padding: 0 12px;
   display: flex;
   align-items: center;
   border: 1px solid #cbd5e1;
-  height: 40px;
+  height: 45px;
   white-space: nowrap;
 }
 
@@ -161,7 +185,7 @@ function onInput(e) {
 .input-element {
   flex: 1;
   border: 1px solid #cbd5e1;
-  height: 40px;
+  height: 45px;
   padding: 0 12px;
   outline: none;
   color: #0f172a;
@@ -210,7 +234,7 @@ function onInput(e) {
   top: -2%;
   font-size: 12px;
   padding: 0 4px;
-  background: #f1f5f9;
+  background: #fff;
 }
 
 .required {
@@ -223,11 +247,27 @@ function onInput(e) {
   margin-top: 2px;
 }
 
+.status-error .input-element,
+.status-error .input-addon,
+.status-error .label.floating,
+.status-error .label.static {
+  border-color: var(--color-error, red);
+  color: var(--color-error, red);
+}
+
+.status-success .input-element,
+.status-success .input-addon,
+.status-success .label.floating,
+.status-success .label.static {
+  border-color: var(--color-success, green);
+  color: var(--color-success, green);
+}
+
 .message.error {
   color: var(--color-error, red);
 }
 
 .message.success {
-  color: var(--color-success, green);
+  color: var(--color-success);
 }
 </style>

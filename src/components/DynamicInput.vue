@@ -19,10 +19,7 @@
 
     <div class="input-group">
       <!-- Preaddon -->
-      <span
-        v-if="preaddon"
-        class="input-addon left"
-      >
+      <span v-if="preaddon" class="input-addon left">
         {{ preaddon }}
       </span>
 
@@ -38,7 +35,7 @@
           class="input-element"
           :class="{
             'rounded-left-none': preaddon,
-            'rounded-right-none': $slots.append || $slots['icon-right'] || $slots.suffix
+            'rounded-right-none': postaddon || $slots.append || $slots['icon-right'] || $slots.suffix
           }"
           :type="type"
           :placeholder="!isStaticLabel && !(focused || filled) ? placeholder : ''"
@@ -52,11 +49,7 @@
           @mouseleave="hovered = false"
         />
 
-        <label
-          v-if="label && !isStaticLabel"
-          class="label floating"
-          :class="{ active: focused || filled }"
-        >
+        <label v-if="label && !isStaticLabel" class="label floating" :class="{ active: focused || filled }">
           {{ label }}<span v-if="required" class="required">*</span>
         </label>
       </div>
@@ -69,6 +62,10 @@
 
       <!-- Append -->
       <slot name="append" />
+
+      <span v-if="postaddon" class="input-addon right">
+        {{ postaddon }}
+      </span>
     </div>
 
     <!-- Message -->
@@ -77,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch } from "vue";
 
 const props = defineProps({
   modelValue: String,
@@ -85,14 +82,18 @@ const props = defineProps({
   placeholder: String,
   preaddon: {
     type: String,
-    default: ''
+    default: ""
+  },
+  postaddon: {
+    type: String,
+    default: ""
   },
   required: Boolean,
   hasIconLeft: Boolean,
   hasIconRight: Boolean,
   type: {
     type: String,
-    default: 'text'
+    default: "text"
   },
   status: String,
   message: String,
@@ -101,18 +102,21 @@ const props = defineProps({
   isStaticLabel: Boolean
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const innerValue = ref(props.modelValue);
 const focused = ref(false);
 const hovered = ref(false);
 
 const filled = computed(() => !!innerValue.value);
-const statusClass = computed(() => (props.status ? `status-${props.status}` : ''));
+const statusClass = computed(() => (props.status ? `status-${props.status}` : ""));
 
-watch(() => props.modelValue, (val) => {
-  innerValue.value = val;
-});
+watch(
+  () => props.modelValue,
+  (val) => {
+    innerValue.value = val;
+  }
+);
 
 function onFocus() {
   focused.value = true;
@@ -123,7 +127,7 @@ function onBlur() {
 }
 
 function onInput(e) {
-  emit('update:modelValue', e.target.value);
+  emit("update:modelValue", e.target.value);
 }
 </script>
 
@@ -154,6 +158,11 @@ function onInput(e) {
 .input-addon.left {
   border-right: none;
   border-radius: 8px 0 0 8px;
+}
+
+.input-addon.right {
+  border-left: none;
+  border-radius: 0px 8px 8px 0px;
 }
 
 .input-element {
@@ -194,20 +203,21 @@ function onInput(e) {
 
 .label.floating {
   position: absolute;
-  left: 14px;
   top: 50%;
+  left: 4%;
   transform: translateY(-50%);
-  color: #64748b;
+  transition: all 0.2s ease;
   font-size: 14px;
+  color: #333333;
   pointer-events: none;
   transition: 0.2s ease;
-  background: white;
-  padding: 0 4px;
 }
 
 .label.floating.active {
-  top: -8px;
+  top: -2%;
   font-size: 12px;
+  padding: 0 4px;
+  background: #f1f5f9;
 }
 
 .required {

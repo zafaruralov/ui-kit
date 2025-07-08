@@ -25,14 +25,9 @@
   </InputText>
   <InputText v-model="inputValue" label="Ваше Ф.И.О." placeholder="hi" required readonly :is-static-label="true">
   </InputText>
-  <!-- Toggler -->
-
-  <!-- Switch -->
-  <Checkbox id="toggle4" v-model="isSwitched" label="Toggle Switch" />
 </template>
 <script setup>
 import InputText from "./components/DynamicInput.vue";
-import Checkbox from "./components/ui/Checkbox.vue";
 </script>
 <style>
 .need-space {

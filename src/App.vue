@@ -21,9 +21,7 @@
       :has-icon-left="false"
       message="Пользователь уже существует!"
     >
-      <!-- <template #icon-right> -->
       <img src="/public/favicon.ico" alt="icon" />
-      <!-- </template> -->
     </InputText>
     <InputText v-model="inputValue" label="Ваше Ф.И.О." placeholder="hi" required readonly :is-static-label="true">
     </InputText>
@@ -37,5 +35,7 @@ import InputText from "./components/DynamicInput.vue";
   padding: 40px;
   display: flex;
   gap: 200px;
+  align-items: center;
+  justify-content: center;
 }
 </style>

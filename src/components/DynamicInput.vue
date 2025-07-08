@@ -18,18 +18,14 @@
     </label>
 
     <div class="input-group">
-      <!-- Preaddon -->
       <span v-if="preaddon" class="input-addon left">
         {{ preaddon }}
       </span>
 
-      <!-- Left Icon -->
       <slot name="icon-left" />
 
-      <!-- Prefix -->
       <slot name="prefix" />
 
-      <!-- Input container -->
       <div class="input-container">
         <input
           class="input-element"
@@ -54,13 +50,10 @@
         </label>
       </div>
 
-      <!-- Suffix -->
       <slot name="suffix" />
 
-      <!-- Right Icon -->
       <slot name="icon-right" />
 
-      <!-- Append -->
       <slot name="append" />
 
       <span v-if="postaddon" class="input-addon right">

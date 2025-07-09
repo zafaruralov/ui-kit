@@ -1,8 +1,9 @@
-import Input from "./DynamicInput.vue";
+import { ref, watch } from "vue";
+import InputText from "./DynamicInput.vue";
 
 export default {
-  title: "UI/Input",
-  component: Input,
+  title: "UI/InputText",
+  component: InputText,
   argTypes: {
     modelValue: { control: "text" },
     label: { control: "text" },
@@ -10,72 +11,105 @@ export default {
     preaddon: { control: "text" },
     postaddon: { control: "text" },
     required: { control: "boolean" },
+    readonly: { control: "boolean" },
+    disabled: { control: "boolean" },
     type: {
       control: "select",
-      options: ["text", "password", "email", "number"]
+      options: ["text", "email", "password", "number"]
     },
     status: {
       control: "select",
-      options: ["success", "error"]
+      options: ["success", "error", ""]
     },
     message: { control: "text" },
-    disabled: { control: "boolean" },
-    readonly: { control: "boolean" },
     isStaticLabel: { control: "boolean" }
   }
 };
+
 const Template = (args) => ({
-  components: { Input },
-  data() {
-    return {
-      model: args.modelValue
-    };
+  components: { InputText },
+  setup() {
+    const model = ref(args.modelValue);
+    watch(model, (val) => {
+      args.modelValue = val;
+    });
+    return { args, model };
   },
-  watch: {
-    model(val) {
-      this.$emit?.("update:modelValue", val);
-    }
-  },
-  template: `<Input v-bind="args" v-model="model" />`
+  template: `
+    <InputText v-bind="args" v-model="model">
+      <template v-if="args.append" #append>
+        <button class="input-button right">{{ args.append }}</button>
+      </template>
+    </InputText>
+  `
 });
+
 export const Default = Template.bind({});
 Default.args = {
   modelValue: "",
-  label: "Your name",
-  placeholder: "Enter your name",
-  type: "text",
+  label: "Ваше Ф.И.О.",
+  placeholder: "hi",
+  status: "",
   required: true,
-  preaddon: "👤",
-  postaddon: "",
-  status: undefined,
-  message: "",
-  disabled: false,
-  readonly: false,
-  isStaticLabel: false
+  postaddon: ".com",
+  isStaticLabel: true,
+  message: "Пользователь уже существует!",
+  append: null
 };
-export const FloatingLabel = Template.bind({});
-FloatingLabel.args = {
-  ...Default.args,
+
+export const WithPreaddon = Template.bind({});
+WithPreaddon.args = {
+  modelValue: "",
+  label: "Website",
+  placeholder: "Enter domain",
+  preaddon: "https://",
+  postaddon: ".com",
+  isStaticLabel: true
+};
+
+export const WithPostaddonAndAppend = Template.bind({});
+WithPostaddonAndAppend.args = {
+  modelValue: "",
   label: "Email",
   placeholder: "Enter your email",
-  isStaticLabel: false,
-  type: "email"
+  postaddon: ".com",
+  append: "Check",
+  isStaticLabel: true
 };
 
-export const WithStatus = Template.bind({});
-WithStatus.args = {
-  ...Default.args,
-  label: "Phone",
-  modelValue: "998",
-  status: "success",
-  message: "Looks good!"
-};
-
-export const WithError = Template.bind({});
-WithError.args = {
-  ...Default.args,
-  label: "Phone",
+export const FloatingLabelWithIcons = Template.bind({});
+FloatingLabelWithIcons.args = {
   modelValue: "",
-  status: "error",
-  message: "This field is required"
+  label: "Your Name",
+  placeholder: "John Doe",
+  hasIconLeft: true,
+  hasIconRight: true,
+  isStaticLabel: false,
+  message: "Looks good",
+  status: ""
 };
+
+export const ReadonlySuccess = Template.bind({});
+ReadonlySuccess.args = {
+  modelValue: "readonly@example.com",
+  label: "Email (Readonly)",
+  isStaticLabel: true,
+  status: "success",
+  readonly: true,
+  message: "Email is read only"
+};
+
+export const GroupedInputs = () => ({
+  components: { InputText },
+  setup() {
+    const username = ref("");
+    const domain = ref("");
+    return { username, domain };
+  },
+  template: `
+    <div style="display: flex; gap: 8px;">
+      <InputText v-model="username" placeholder="username" label="Login" :is-static-label="true" />
+      <InputText v-model="domain" placeholder="domain.com" postaddon=".com" label="Domain" :is-static-label="true" />
+    </div>
+  `
+});

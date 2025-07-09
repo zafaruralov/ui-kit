@@ -220,8 +220,9 @@ function onInput(e) {
 
 .label.floating {
   position: absolute;
+  margin-left: 12px;
   top: 50%;
-  left: 4%;
+  left: 0%;
   transform: translateY(-50%);
   transition: all 0.2s ease;
   font-size: 14px;

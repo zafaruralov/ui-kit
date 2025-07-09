@@ -61,10 +61,10 @@ export const WithPreaddon = Template.bind({});
 WithPreaddon.args = {
   modelValue: "",
   label: "Website",
-  placeholder: "Enter domain",
+  placeholder: "",
   preaddon: "https://",
   postaddon: ".com",
-  isStaticLabel: true
+  isStaticLabel: false
 };
 
 export const WithPostaddonAndAppend = Template.bind({});

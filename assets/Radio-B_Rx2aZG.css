@@ -1,0 +1,1 @@
+.radio{display:inline-flex;align-items:center;gap:8px;cursor:pointer}.radio input:disabled+.custom-radio{border-color:#aaa;background-color:#eee}.radio input:disabled~.label-text{color:#aaa;cursor:not-allowed}

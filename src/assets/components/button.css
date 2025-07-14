@@ -1,0 +1,232 @@
+.pl-btn-base {
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  position: relative;
+  will-change: transform, opacity;
+}
+
+.pl-btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.pl-btn-secondary {
+  background: var(--color-secondary);
+  color: #fff;
+}
+.pl-btn-info {
+  background: var(--color-info);
+  color: #fff;
+}
+.pl-btn-success {
+  background: var(--color-success);
+  color: #fff;
+}
+.pl-btn-warning {
+  background: var(--color-warning);
+  color: var(--color-secondary);
+}
+.pl-btn-error {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.pl-btn-outline.pl-btn-primary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+.pl-btn-outline.pl-btn-secondary {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+}
+.pl-btn-outline.pl-btn-info {
+  background: transparent;
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+.pl-btn-outline.pl-btn-success {
+  background: transparent;
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+.pl-btn-outline.pl-btn-warning {
+  background: transparent;
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+}
+.pl-btn-outline.pl-btn-error {
+  background: transparent;
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+.pl-btn-small-x {
+  font-size: 10px;
+  padding: 10px 15px;
+  max-height: 32px;
+  border-radius: 6px;
+  gap: 5px;
+}
+.pl-btn-small {
+  font-size: 12px;
+  padding: 12px 18px;
+  max-height: 38px;
+  border-radius: 8px;
+  gap: 6px;
+}
+.pl-btn-medium {
+  font-size: 14px;
+  padding: 14px 21px;
+  max-height: 45px;
+  border-radius: 10px;
+  gap: 7px;
+}
+.pl-btn-large {
+  font-size: 16px;
+  padding: 16px 24px;
+  max-height: 51px;
+  border-radius: 12px;
+  gap: 8px;
+}
+.pl-btn-large-x {
+  font-size: 18px;
+  padding: 18px 27px;
+  max-height: 58px;
+  border-radius: 14px;
+  gap: 9px;
+}
+
+.pl-btn-solid {
+}
+.pl-btn-outline {
+  background: transparent;
+}
+.pl-btn-tag {
+  border-radius: 100px;
+  font-size: 14px;
+  padding: 15px 10px;
+  height: 30px;
+}
+.pl-btn-text {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+.pl-btn-icon {
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+}
+
+.pl-btn-base:hover:not(:disabled).pl-btn-solid,
+.pl-btn-base:hover:not(:disabled).pl-btn-with-icon,
+.pl-btn-base:hover:not(:disabled).pl-btn-outline {
+  transform: scale(1.05);
+}
+
+.pl-btn-base:hover:not(:disabled).pl-btn-tag {
+  background: #0e55a3;
+}
+
+.pl-btn-base:hover:not(:disabled).pl-btn-text {
+  filter: brightness(150%);
+}
+
+.pl-btn-disabled.pl-btn-text {
+  filter: grayscale(1);
+}
+
+.pl-btn-base:focus {
+  outline: none;
+}
+
+.pl-btn-base:focus.pl-btn-solid,
+.pl-btn-base:focus.pl-btn-with-icon,
+.pl-btn-base:focus.pl-btn-outline {
+  box-shadow: 0px 0px 0px 1px #f3f4f6;
+}
+
+.pl-btn-tag:focus {
+  box-shadow: 0px 0px 0px 2px #60b1ff;
+}
+
+.pl-btn-text:focus {
+  box-shadow: 0px 0px 4px 1px #60b1ff99;
+}
+
+.pl-btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pl-btn-with-icon > *:first-child {
+  gap: 7px;
+}
+
+.pl-btn-badge {
+  background: var(--color-info);
+  color: #fff;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 4px 5px;
+  border-radius: 6px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.pl-badge-in-block {
+  position: static;
+}
+
+.pl-badge-on-top {
+  top: -6px;
+  right: -6px;
+}
+
+.pl-badge-on-hover {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.pl-btn-base:hover .pl-badge-on-hover {
+  opacity: 1;
+}
+
+.pl-button-group {
+  display: inline-flex;
+  border: 1px solid var(--color-primary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pl-button-group .pl-btn-base {
+  border-radius: 0;
+  border-right: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: white;
+  font-weight: 500;
+}
+
+.pl-button-group .pl-btn-base:last-child {
+  border-right: none;
+}
+
+.pl-button-group .pl-btn-base:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.pl-button-group .pl-btn-base:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}

@@ -1,0 +1,125 @@
+.pl-tooltip-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  padding: 4px 5px;
+  border-radius: 6px;
+  background: var(--color-info);
+}
+
+.pl-tooltip-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.pl-tooltip-secondary {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+.pl-tooltip-info {
+  background: var(--color-info);
+  color: #fff;
+}
+
+.pl-tooltip-success {
+  background: var(--color-success);
+  color: #fff;
+}
+
+.pl-tooltip-warning {
+  background: var(--color-warning);
+  color: var(--color-secondary);
+}
+
+.pl-tooltip-error {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.pl-visible {
+  opacity: 1;
+}
+
+.pl-mode-in-block {
+  position: static;
+  opacity: 1;
+  margin-left: 8px;
+}
+
+.pl-mode-on-top.pl-tooltip-top {
+  top: -6px;
+  right: -6px;
+}
+
+.pl-mode-on-top.pl-tooltip-left {
+  top: -6px;
+  left: -6px;
+}
+
+.pl-mode-on-top.pl-tooltip-right {
+  top: -6px;
+  right: -6px;
+}
+
+.pl-mode-on-hover.pl-tooltip-top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+}
+
+.pl-mode-on-hover.pl-tooltip-bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.pl-mode-on-hover.pl-tooltip-left {
+  right: 100%;
+  top: 50%;
+  transform: translateX(-8px) translateY(-50%);
+}
+
+.pl-mode-on-hover.pl-tooltip-right {
+  left: 100%;
+  top: 50%;
+  transform: translateX(8px) translateY(-50%);
+}
+
+/* TODO */
+/* .pl-tooltip-content {
+  position: relative;
+} */
+
+.pl-tooltip-content.hovered::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top-color: var(--color-info);
+  transform: translate(-50%, 0);
+}
+
+.pl-tooltip-left .pl-tooltip-content.hovered::before {
+  transform: rotate(270deg);
+  left: 100%;
+  top: 34%;
+}
+
+.pl-tooltip-right .pl-tooltip-content.hovered::before {
+  transform: rotate(90deg);
+  left: -27%;
+  top: 35%;
+}
+
+.pl-tooltip-bottom .pl-tooltip-content.hovered::before {
+  transform: rotate(180deg);
+  left: 45%;
+  top: -28%;
+}

@@ -1,0 +1,1 @@
+.checkbox[data-v-0b536f95]{display:inline-flex;align-items:center;gap:8px;cursor:pointer}.checkbox input:disabled+.custom-checkbox[data-v-0b536f95]{border-color:#aaa;background-color:#eee}.checkbox input:disabled~.label-text[data-v-0b536f95]{color:#aaa;cursor:not-allowed}

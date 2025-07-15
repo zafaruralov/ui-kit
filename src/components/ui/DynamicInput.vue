@@ -18,10 +18,10 @@
     </label>
 
     <div class="input-group">
-      <span v-if="preaddon" class="input-addon left">
+      <slot name="preappend" />
+      <span v-if="preaddon" class="input-addon left" :class="{ 'with-append': hasPreappend }">
         {{ preaddon }}
       </span>
-      <slot name="prepend" />
       <slot name="icon-left" />
 
       <slot name="prefix" />
@@ -37,7 +37,7 @@
             }
           ]"
           :type="type"
-          :placeholder="!isStaticLabel && !(focused || filled) ? placeholder : ''"
+          :placeholder="isStaticLabel ? placeholder : ''"
           :disabled="disabled"
           :readonly="readonly"
           v-model="innerValue"
@@ -57,10 +57,10 @@
 
       <slot name="icon-right" />
 
-      <slot name="append" />
-      <span v-if="postaddon" class="input-addon right">
+      <span v-if="postaddon" class="input-addon right" :class="{ 'with-append': hasAppend }">
         {{ postaddon }}
       </span>
+      <slot name="append" />
     </div>
 
     <p v-if="message" class="message" :class="status">{{ message }}</p>
@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, useSlots } from "vue";
 
 const props = defineProps({
   modelValue: String,
@@ -97,10 +97,14 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
+const slots = useSlots();
 
 const innerValue = ref(props.modelValue);
 const focused = ref(false);
 const hovered = ref(false);
+
+const hasAppend = computed(() => !!slots.append);
+const hasPreappend = computed(() => !!slots.preappend);
 
 const filled = computed(() => !!innerValue.value);
 const statusClass = computed(() => (props.status ? `status-${props.status}` : ""));
@@ -176,12 +180,17 @@ function onInput(e) {
   border-right: none;
   border-radius: 8px 0 0 8px;
 }
-
+.input-addon.left.with-append {
+  border-radius: 0;
+}
 .input-addon.right {
   border-left: none;
   border-radius: 0px 8px 8px 0px;
 }
 
+.input-addon.right.with-append {
+  border-radius: 0;
+}
 .input-element {
   flex: 1;
   border: 1px solid #cbd5e1;

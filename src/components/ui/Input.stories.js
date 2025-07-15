@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 import InputText from "./DynamicInput.vue";
+import "@/assets/main.css";
 
 export default {
   title: "UI/InputText",
@@ -37,6 +38,9 @@ const Template = (args) => ({
   },
   template: `
     <InputText v-bind="args" v-model="model">
+      <template v-if="args.preappend" #preappend>
+        <button class="input-button left">{{ args.preappend }}</button>
+      </template>
       <template v-if="args.append" #append>
         <button class="input-button right">{{ args.append }}</button>
       </template>
@@ -54,7 +58,8 @@ Default.args = {
   postaddon: ".com",
   isStaticLabel: true,
   message: "Пользователь уже существует!",
-  append: null
+  append: null,
+  preappend: null
 };
 
 export const WithPreaddon = Template.bind({});

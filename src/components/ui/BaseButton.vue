@@ -47,7 +47,7 @@ const isHovered = ref(false);
   <button :class="classes" :disabled="disabled" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <slot />
     <TooltipBadge
-      v-show="true"
+      v-show="badgeText && (badgePosition !== 'on-hover' || isHovered)"
       :text="badgeText"
       :size="size"
       :color="props.color"

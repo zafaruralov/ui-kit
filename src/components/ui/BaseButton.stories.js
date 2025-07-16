@@ -1,5 +1,5 @@
 import BaseButton from "./BaseButton.vue";
-import "@/assets/base.css";
+import "@/assets/main.css";
 
 export default {
   title: "UI/BaseButton",
